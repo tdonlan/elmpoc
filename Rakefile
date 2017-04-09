@@ -1,7 +1,7 @@
 task :build do
 	sh "go build elmpoc"
-	sh "elm-make elm/examples/01-button.elm --output frontend/01-button.html"
+	sh "cd elm && elm-make examples/01-button.elm --output ../frontend/js/main.js && cd .."
 end
-task :run do
+task :run => :build do
 	sh "./elmpoc"
 end

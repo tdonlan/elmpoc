@@ -1,0 +1,19 @@
+elm poc
+	-golang backend - serve up html static content + hello world GET route
+
+	-elm frontend framework.  click button, call route, display data
+
+	-materialize css - styling for buttons, responsive, etc
+
+	-docker container - wrap the whole thing up, deploy to server
+
+	-tooling - make file?  bower / npm / rake?
+
+
+apr 8
+	-how to include external css files in elm to be included in compiled html?
+	https://groups.google.com/forum/#!topic/elm-discuss/5tby4k8KrF0
+	http://tech.noredink.com/post/129641182738/building-a-live-validated-signup-form-in-elm
+		-best practice, compile elm to js and include in static html that has css linked
+
+		
