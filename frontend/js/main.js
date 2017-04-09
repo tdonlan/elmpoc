@@ -9048,10 +9048,21 @@ var _user$project$Main$decodeGifUrl = A2(
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
-var _user$project$Main$Model = F2(
-	function (a, b) {
-		return {topic: a, gifUrl: b};
+var _user$project$Main$Model = F3(
+	function (a, b, c) {
+		return {topic: a, gifUrl: b, txt: c};
 	});
+var _user$project$Main$NewText = function (a) {
+	return {ctor: 'NewText', _0: a};
+};
+var _user$project$Main$getText = function () {
+	var url = 'api/hello';
+	return A2(
+		_elm_lang$http$Http$send,
+		_user$project$Main$NewText,
+		_elm_lang$http$Http$getString(url));
+}();
+var _user$project$Main$PrintText = {ctor: 'PrintText'};
 var _user$project$Main$NewGif = function (a) {
 	return {ctor: 'NewGif', _0: a};
 };
@@ -9065,29 +9076,42 @@ var _user$project$Main$getRandomGif = function (topic) {
 var _user$project$Main$init = function (topic) {
 	return {
 		ctor: '_Tuple2',
-		_0: A2(_user$project$Main$Model, topic, 'waiting.gif'),
+		_0: A3(_user$project$Main$Model, topic, 'waiting.gif', 'blah some initial text'),
 		_1: _user$project$Main$getRandomGif(topic)
 	};
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		if (_p0.ctor === 'MorePlease') {
-			return {
-				ctor: '_Tuple2',
-				_0: model,
-				_1: _user$project$Main$getRandomGif(model.topic)
-			};
-		} else {
-			if (_p0._0.ctor === 'Ok') {
+		switch (_p0.ctor) {
+			case 'MorePlease':
 				return {
 					ctor: '_Tuple2',
-					_0: A2(_user$project$Main$Model, model.topic, _p0._0._0),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_0: model,
+					_1: _user$project$Main$getRandomGif(model.topic)
 				};
-			} else {
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			}
+			case 'NewGif':
+				if (_p0._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: A3(_user$project$Main$Model, model.topic, _p0._0._0, model.txt),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'PrintText':
+				return {ctor: '_Tuple2', _0: model, _1: _user$project$Main$getText};
+			default:
+				if (_p0._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: A3(_user$project$Main$Model, model.topic, model.gifUrl, _p0._0._0),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
 		}
 	});
 var _user$project$Main$MorePlease = {ctor: 'MorePlease'};
@@ -9122,20 +9146,53 @@ var _user$project$Main$view = function (model) {
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$br,
-						{ctor: '[]'},
-						{ctor: '[]'}),
+						_elm_lang$html$Html$button,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$PrintText),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Print Text'),
+							_1: {ctor: '[]'}
+						}),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$img,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$src(model.gifUrl),
-								_1: {ctor: '[]'}
-							},
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
 							{ctor: '[]'}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(model.txt),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$br,
+									{ctor: '[]'},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$img,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$src(model.gifUrl),
+											_1: {ctor: '[]'}
+										},
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$br,
+											{ctor: '[]'},
+											{ctor: '[]'}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

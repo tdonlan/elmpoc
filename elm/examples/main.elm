@@ -1,3 +1,6 @@
+-- Read more about this program in the official Elm guide:
+-- https://guide.elm-lang.org/architecture/effects/http.html
+
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -22,16 +25,15 @@ main =
 type alias Model =
   { topic : String
   , gifUrl : String
+  , txt : String
   }
 
 
 init : String -> (Model, Cmd Msg)
 init topic =
-  ( Model topic "waiting.gif"
+  ( Model topic "waiting.gif" "blah some initial text"
   , getRandomGif topic
   )
-
-
 
 -- UPDATE
 
@@ -39,6 +41,9 @@ init topic =
 type Msg
   = MorePlease
   | NewGif (Result Http.Error String)
+  | PrintText
+  | NewText (Result Http.Error String)
+    
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -48,12 +53,19 @@ update msg model =
       (model, getRandomGif model.topic)
 
     NewGif (Ok newUrl) ->
-      (Model model.topic newUrl, Cmd.none)
+      (Model model.topic newUrl model.txt, Cmd.none)
 
     NewGif (Err _) ->
       (model, Cmd.none)
-
-
+      
+    PrintText ->
+      (model, getText)
+     
+    NewText (Ok newTxt) ->
+      (Model model.topic model.gifUrl newTxt, Cmd.none)
+      
+    NewText (Err _) ->
+      (model, Cmd.none)
 
 -- VIEW
 
@@ -63,11 +75,13 @@ view model =
   div []
     [ h2 [] [text model.topic]
     , button [ onClick MorePlease ] [ text "More Please!" ]
+    , button [ onClick PrintText ] [ text "Print Text" ]
+    , br [] []
+    , text model.txt
     , br [] []
     , img [src model.gifUrl] []
+    , br [] []
     ]
-
-
 
 -- SUBSCRIPTIONS
 
@@ -76,11 +90,16 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
   Sub.none
 
-
-
 -- HTTP
 
-
+getText : (Cmd Msg)
+getText =
+  let
+    url =
+      "api/hello"
+  in
+    Http.send NewText (Http.getString url)
+    
 getRandomGif : String -> Cmd Msg
 getRandomGif topic =
   let
