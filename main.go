@@ -1,9 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"net/http"
 )
 
 func main() {
-	fmt.Print("Hello world!")
+	fs := http.FileServer(http.Dir("frontend"))
+	http.Handle("/", fs)
+
+	log.Println("Listening...")
+	http.ListenAndServe(":3000", nil)
 }
