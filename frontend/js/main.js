@@ -8827,6 +8827,121 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'checked',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'value',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
+
 var _elm_lang$http$Native_Http = function() {
 
 
@@ -10074,6 +10189,13 @@ var _user$project$Models$PlayerRoute = function (a) {
 };
 var _user$project$Models$PlayersRoute = {ctor: 'PlayersRoute'};
 
+var _user$project$Msgs$OnPlayerSave = function (a) {
+	return {ctor: 'OnPlayerSave', _0: a};
+};
+var _user$project$Msgs$ChangeLevel = F2(
+	function (a, b) {
+		return {ctor: 'ChangeLevel', _0: a, _1: b};
+	});
 var _user$project$Msgs$OnLocationChange = function (a) {
 	return {ctor: 'OnLocationChange', _0: a};
 };
@@ -10081,6 +10203,37 @@ var _user$project$Msgs$OnFetchPlayers = function (a) {
 	return {ctor: 'OnFetchPlayers', _0: a};
 };
 
+var _user$project$Commands$playerEncoder = function (player) {
+	var attributes = {
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 'id',
+			_1: _elm_lang$core$Json_Encode$string(player.id)
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'name',
+				_1: _elm_lang$core$Json_Encode$string(player.name)
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'level',
+					_1: _elm_lang$core$Json_Encode$int(player.level)
+				},
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+	return _elm_lang$core$Json_Encode$object(attributes);
+};
+var _user$project$Commands$savePlayerUrl = function (playerId) {
+	return A2(_elm_lang$core$Basics_ops['++'], 'http://localhost:3000/players/', playerId);
+};
 var _user$project$Commands$playerDecoder = A3(
 	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
 	'level',
@@ -10094,6 +10247,25 @@ var _user$project$Commands$playerDecoder = A3(
 			'id',
 			_elm_lang$core$Json_Decode$string,
 			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_user$project$Models$Player))));
+var _user$project$Commands$savePlayerRequest = function (player) {
+	return _elm_lang$http$Http$request(
+		{
+			body: _elm_lang$http$Http$jsonBody(
+				_user$project$Commands$playerEncoder(player)),
+			expect: _elm_lang$http$Http$expectJson(_user$project$Commands$playerDecoder),
+			headers: {ctor: '[]'},
+			method: 'PUT',
+			timeout: _elm_lang$core$Maybe$Nothing,
+			url: _user$project$Commands$savePlayerUrl(player.id),
+			withCredentials: false
+		});
+};
+var _user$project$Commands$savePlayerCmd = function (player) {
+	return A2(
+		_elm_lang$http$Http$send,
+		_user$project$Msgs$OnPlayerSave,
+		_user$project$Commands$savePlayerRequest(player));
+};
 var _user$project$Commands$playersDecoder = _elm_lang$core$Json_Decode$list(_user$project$Commands$playerDecoder);
 var _user$project$Commands$fetchPlayersUrl = 'http://localhost:3000/players';
 var _user$project$Commands$fetchPlayers = A2(
@@ -10138,26 +10310,60 @@ var _user$project$Routing$parseLocation = function (location) {
 	}
 };
 
+var _user$project$Update$updatePlayer = F2(
+	function (model, updatedPlayer) {
+		var pick = function (currentPlayer) {
+			return _elm_lang$core$Native_Utils.eq(updatedPlayer.id, currentPlayer.id) ? updatedPlayer : currentPlayer;
+		};
+		var updatePlayerList = function (players) {
+			return A2(_elm_lang$core$List$map, pick, players);
+		};
+		var updatedPlayers = A2(_krisajenkins$remotedata$RemoteData$map, updatePlayerList, model.players);
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{players: updatedPlayers});
+	});
 var _user$project$Update$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		if (_p0.ctor === 'OnFetchPlayers') {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{players: _p0._0}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			var newRoute = _user$project$Routing$parseLocation(_p0._0);
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{route: newRoute}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
+		switch (_p0.ctor) {
+			case 'OnFetchPlayers':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{players: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'OnLocationChange':
+				var newRoute = _user$project$Routing$parseLocation(_p0._0);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{route: newRoute}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ChangeLevel':
+				var _p1 = _p0._0;
+				var updatedPlayer = _elm_lang$core$Native_Utils.update(
+					_p1,
+					{level: _p1.level + _p0._1});
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Commands$savePlayerCmd(updatedPlayer)
+				};
+			default:
+				if (_p0._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: A2(_user$project$Update$updatePlayer, model, _p0._0._0),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
 		}
 	});
 
@@ -10189,12 +10395,17 @@ var _user$project$Players_Edit$listBtn = A2(
 		}
 	});
 var _user$project$Players_Edit$btnLevelIncrease = function (player) {
+	var message = A2(_user$project$Msgs$ChangeLevel, player, 1);
 	return A2(
 		_elm_lang$html$Html$a,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('btn ml1 h1'),
-			_1: {ctor: '[]'}
+			_0: _elm_lang$html$Html_Attributes$class('btn-floating btn-large waves-effect waves-light red'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(message),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
@@ -10202,7 +10413,7 @@ var _user$project$Players_Edit$btnLevelIncrease = function (player) {
 				_elm_lang$html$Html$i,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('fa fa-plus-circle'),
+					_0: _elm_lang$html$Html_Attributes$class('material-icons'),
 					_1: {ctor: '[]'}
 				},
 				{ctor: '[]'}),
@@ -10210,12 +10421,17 @@ var _user$project$Players_Edit$btnLevelIncrease = function (player) {
 		});
 };
 var _user$project$Players_Edit$btnLevelDecrease = function (player) {
+	var message = A2(_user$project$Msgs$ChangeLevel, player, -1);
 	return A2(
 		_elm_lang$html$Html$a,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('btn ml1 h1'),
-			_1: {ctor: '[]'}
+			_0: _elm_lang$html$Html_Attributes$class('btn-floating btn-large waves-effect waves-light red'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(message),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
@@ -10223,7 +10439,7 @@ var _user$project$Players_Edit$btnLevelDecrease = function (player) {
 				_elm_lang$html$Html$i,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('fa fa-minus-circle'),
+					_0: _elm_lang$html$Html_Attributes$class('material-icons'),
 					_1: {ctor: '[]'}
 				},
 				{ctor: '[]'}),
