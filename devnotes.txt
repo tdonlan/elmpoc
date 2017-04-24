@@ -17,3 +17,8 @@ apr 8
 		-best practice, compile elm to js and include in static html that has css linked
 
 		
+apr 23
+
+	-routing multiple pages
+	-sharing state across pages. client vs server side?
+
