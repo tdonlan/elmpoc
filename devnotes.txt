@@ -16,4 +16,9 @@ apr 8
 	http://tech.noredink.com/post/129641182738/building-a-live-validated-signup-form-in-elm
 		-best practice, compile elm to js and include in static html that has css linked
 
+	-single page app - how to have multiple pages with same signed on session?
+	https://www.elm-tutorial.org/en/
+	
 		
+apr 9
+	modules - how to split the application across multiple files? how to import into other files? chaining?
