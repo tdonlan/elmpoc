@@ -20,5 +20,12 @@ apr 8
 	https://www.elm-tutorial.org/en/
 	
 		
+
 apr 9
 	modules - how to split the application across multiple files? how to import into other files? chaining?
+
+apr 23
+
+	-routing multiple pages
+	-sharing state across pages. client vs server side?
+
